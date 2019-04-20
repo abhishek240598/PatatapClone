@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Patatap</title>						<!-- Meta Data Goes Here -->
+<script type="text/javascript" src="paper-full.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.28/howler.js"></script>
+<link rel="stylesheet" type="text/css" href="circle.css">
+<script type="text/paperscript" canvas="myCanvas">
+//Different Color and Sound for all a to z keys
+var keyData={
+a: {
+	color:'#2c3e50',
+	sound:new Howl({
+  		urls: ['sounds/bubbles.mp3']
+	})
+},
+b:{
+	color:'#8e44ad',
+	sound:new Howl({
+  	urls: ['sounds/clay.mp3']
+	})
+},
+c:{
+	color:'#2980b9',
+	sound:new Howl({
+  	urls: ['sounds/confetti.mp3']
+	})
+},
+d:{
+	color:'#27ae60',
+	sound:new Howl({
+  	urls: ['sounds/corona.mp3']
+	})
+},
+e:{
+	color:'#16a085',
+	sound:new Howl({
+  	urls: ['sounds/dotted-spiral.mp3']
+	})
+},
+f:{
+	color:'#34495e',
+	sound:new Howl({
+  	urls: ['sounds/flash-1.mp3']
+	})
+},
+
+g:{
+	color:'#9b59b6',
+	sound:new Howl({
+  	urls: ['sounds/flash-2.mp3']
+	})
+},
+h:{
+	color:'#3498db',
+	sound:new Howl({
+  	urls: ['sounds/flash-3.mp3']
+	})
+},
+i:{
+	color:'#2ecc71',
+	sound:new Howl({
+  	urls: ['sounds/glimmer.mp3']
+	})
+},
+j:{
+	color:'#1abc9c',
+	sound:new Howl({
+  	urls: ['sounds/moon.mp3']
+	})
+},
+k:{
+	color:'#d35400',
+	sound:new Howl({
+  	urls: ['sounds/pinwheel.mp3']
+	})
+},
+l:{
+	color:'#f39c12',
+	sound:new Howl({
+  	urls: ['sounds/piston-1.mp3']
+	})
+},
+m:{
+	color:'#27ae60',
+	sound:new Howl({
+  	urls: ['sounds/piston-2.mp3']
+	})
+},
+n:{
+	color:'#2980b9',
+	sound:new Howl({
+  	urls: ['sounds/piston-3.mp3']
+	})
+},
+o:{
+	color:'#16a085',
+	sound:new Howl({
+  	urls: ['sounds/wipe.mp3']
+	})
+},
+p:{
+	color:'#8e44ad',
+	sound:new Howl({
+  	urls: ['sounds/prism-1.mp3']
+	})
+},
+q:{
+	color:'#1abc9c',
+	sound:new Howl({
+  	urls: ['sounds/prism-2.mp3']
+	})
+},
+r:{
+	color:'#2ecc71',
+	sound:new Howl({
+  	urls: ['sounds/prism-3.mp3']
+	})
+},
+s:{
+	color:'#123456',
+	sound:new Howl({
+  	urls: ['sounds/zig-zag.mp3']
+	})
+},
+t:{
+	color:'#f1c40f',
+	sound:new Howl({
+  	urls: ['sounds/squiggle.mp3']
+	})
+},
+u:{
+	color:'#e67e22',
+	sound:new Howl({
+  	urls: ['sounds/strike.mp3']
+	})
+},
+v:{
+	color:'#2980b8',
+	sound:new Howl({
+  	urls: ['sounds/suspension.mp3']
+	})
+},
+w:{
+	color:'#123abc',
+	sound:new Howl({
+  	urls: ['sounds/timer.mp3']
+	})
+},
+x:{
+	color:'#abc123',
+	sound:new Howl({
+  	urls: ['sounds/ufo.mp3']
+	})
+},
+y:{
+	color:'#a1b2c3',
+	sound:new Howl({
+  	urls: ['sounds/veil.mp3']
+	})
+},
+z:{
+	color:'#ffffff',
+	sound:new Howl({
+  	urls: ['sounds/wipe.mp3']
+	})
+}
+
+};
+
+var circle=[];															//Take Array to make eefect to every circle
+
+function onKeyDown(event){												//function call when any key is pressed
+	if(keyData[event.key]){												//To check condition where press key lies in keyData	
+		var maxPoint=new Point(view.size.width,view.size.height);		// we are taking max point of view which can be change,and view means yours screen ans size and width
+		var randomPoint=Point.random();									//Generating random point between 0 and 1
+		var point=maxPoint*randomPoint;									//To Generate random point in screen multiply with max point
+		var newcircle=new Path.Circle(point,500);						//Circle cordinates and 500 radius
+		newcircle.fillColor=keyData[event.key].color;					//color given from keydata for any new circle generated
+		keyData[event.key].sound.play();								//sound given from keyData for any new circle generated
+		circle.push(newcircle);											//push circle into array(track circle) which help to make on frame animation.
+	}
+									
+}
+	
+function onFrame(event) {												//on frame function call every frame of screen
+	for(var i=0;i<circle.length;i++){										
+		// Each frame, change the fill color of the path slightly by
+		// adding 1 to its hue:		
+		circle[i].fillColor.hue += 1;									//To Change Color Every Time/Frame					
+		circle[i].scale(.9);											//To make it small and then disappear every frame
+	}
+}
+
+</script>
+</head>
+<body>
+<!-- Content Goes Here -->
+<canvas id="myCanvas" resize></canvas>
+
+</body>
+</html>
